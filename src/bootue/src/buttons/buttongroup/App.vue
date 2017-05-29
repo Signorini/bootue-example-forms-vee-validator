@@ -2,9 +2,15 @@
   <div id="app" class="container">
 
     <div class="row">
-      <div class="col-xs-6">
+      <div class="col-xs-12">
 
-        <bs-form-normal></bs-form-normal>
+        <img src="src/assets/logo.png" height="50">
+        <bs-input
+           label="Username"
+           name="name"
+           class="col-xs-12"
+           disabled
+         ></bs-input>
 
 
         <h2>Forms - Bootue + Vee validator</h2>

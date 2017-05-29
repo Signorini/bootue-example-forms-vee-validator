@@ -1,5 +1,6 @@
 var path = require('path')
 var webpack = require('webpack')
+var ExtractTextPlugin = require("extract-text-webpack-plugin")
 
 module.exports = {
   entry: './src/main.js',
@@ -54,9 +55,6 @@ module.exports = {
   devServer: {
     historyApiFallback: true,
     noInfo: true
-  },
-  performance: {
-    hints: false
   },
   devtool: '#eval-source-map'
 }

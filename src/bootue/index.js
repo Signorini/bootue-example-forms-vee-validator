@@ -1,29 +1,11 @@
-import './_core/Core.vue'
-import './utilities/Utilities.vue'
+import Components from './src/index'
 
+function plugin (Vue) {
+  if (plugin.installed) return
 
-import alert from './alert/Alert.vue'
-import './close/Close.vue'
-import bsLabel from './label/Label.vue'
-import './grid/Grid.vue'
-import modal from './modal/Modal.vue'
-import tooltip from './tooltip/Tooltip.vue'
-import typeahead from './typeahead/Typeahead.vue'
-import './typography/Type.vue'
-import './typography/font-awesome/FontAwesome.vue'
-
-import SpreadButtons from './buttons/'
-import SpreadForms from './forms/'
-
-
-let components = {
-  alert,
-  bsLabel,
-  modal,
-  tooltip,
-  typeahead
+  for (let key in Components) {
+    Vue.component(key, Components[key])
+  }
 }
 
-components = Object.assign(components, SpreadButtons, SpreadForms)
-
-export default components
+export default plugin
