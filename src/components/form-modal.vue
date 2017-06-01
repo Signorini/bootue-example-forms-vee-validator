@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <h3>Basic Form</h3>
+    <h3>Form inside modals with tabs</h3>
 
     <form class="col-xs-">
       <div class="row">

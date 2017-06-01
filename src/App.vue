@@ -2,51 +2,30 @@
   <div id="app" class="container">
 
     <div class="row">
-      <div class="col-xs-6">
-
         <bs-form-normal></bs-form-normal>
-
-
-        <h2>Forms - Bootue + Vee validator</h2>
-
-        <bs-form-normal></bs-form-normal>
-
-        <h3>Form - horizontal</h3>
-
-        <h3>Form - inline</h3>
-      </div>
-
+        <hr><hr>
+        <bs-form-inline></bs-form-inline>
+        <hr><hr>
+        <bs-form-horizontal></bs-form-horizontal>
+        <hr><hr>
+        <bs-form-modal></bs-form-modal>
     </div>
-
-    <hr/>
-
-    <div>
-    </div>
-
-
-
-    <h2>Essential Links</h2>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank">Bootue</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank">Vee Validator</a></li>
-    </ul>
-    show spinner (v-model)
   </div>
 </template>
 
 <script>
 import bsFormNormal from './components/form-normal.vue';
+import bsFormInline from './components/form-inline.vue';
+import bsFormHorizontal from './components/form-horizontal.vue';
+import bsFormModal from './components/form-modal.vue';
 
 export default {
   name: 'app',
-  data () {
-    return {
-      show: true,
-      msg: 'Welcome to Your Vue.js App'
-    }
-  },
   components: {
-    bsFormNormal
+    bsFormNormal,
+    bsFormInline,
+    bsFormHorizontal,
+    bsFormModal
   }
 }
 </script>
