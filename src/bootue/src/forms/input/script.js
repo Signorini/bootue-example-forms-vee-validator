@@ -1,14 +1,13 @@
 import '../Forms.vue'
 
 export default {
-  props: {
+    props: {
     clearButton: {type: Boolean, default: false},
     cols: {type: Number, default: null},
-    datalist: {type: Array, default: null},
     disabled: {type: Boolean, default: false},
     help: {type: String, default: null},
     error: {type: String, default: null},
-    icon: {type: Boolean, default: false},
+    icon: {type: Boolean, default: true},
     label: {type: String, default: null},
     state: {type: String, default: null},
     name: {type: String, default: null},
@@ -23,95 +22,82 @@ export default {
     horizontalLabelWrapper: {type: String, default: 'col-sm-2'}
   },
   data () {
-    let val = this.value
-
     return {
-      options: this.datalist,
-      val,
-      isGroup: false
+      isGroup: false,
+      inState: this.state,
+      constants: {
+        SUCCESS: 'success',
+        WARNING: 'warning',
+        ERROR: 'error'
+      }
     }
   },
   computed: {
-    id_datalist () {
-      if (this.type !== 'textarea' && this.datalist instanceof Array) {
-        if (!this._id_datalist) {
-          if (!this.$root.id_datalist) {
-            this.$root.id_datalist = 0
-          }
-          this._id_datalist = 'input-datalist' + this.$root.id_datalist++
-        }
-        return this._id_datalist
-      }
-      return null
-    },
-    input () {
-      return this.$refs.input
-    },
-    showError () {
-      return this.error
-    },
-    showHelp () {
-      return this.help && (!this.showError)
-    },
+    input () {return this.$refs.input},
+    showError () {return this.error},
+    showHelp () {return this.help && (!this.showError)},
+    title () {return this.error || this.help || ''},
+    showState () {return this.inState ? `has-${this.inState}` : ''},
+    labelFeedback () {return this.$slots['label'] || this.label},
     showIcon () {
       let icc
-      switch (this.state) {
-        case 'success':
+      switch (this.inState) {
+        case this.constants.SUCCESS:
           icc = 'check'
           break
-        case 'error':
+        case this.constants.ERROR:
           icc = 'times'
           break
-        case 'warning':
+        case this.constants.WARNING:
           icc = 'exclamation'
           break
       }
       return icc
-    },
-    title () {
-      return this.error || this.help || ''
-    },
-    showState () {
-      return this.state ? `has-${this.state}` : ''
-    },
-    labelFeedback () {
-      return this.$slots['label'] || this.label
     }
   },
   watch: {
-    datalist (val, old) {
-      if (val !== old && val instanceof Array) {
-        this.options = val
-      }
+    error (val) {
+      this.inState=val ? this.constants.ERROR : this.constants.SUCCESS
     },
-    options (val, old) {
-      if (val !== old) this.$emit('options', val)
-    },
-    val (val) {
-      this.$emit('input', val)
+    value (val) {
+      this.bindChanges(val)
     }
   },
   methods: {
+    bindChanges (value, ev='input') {
+      this.input.value = value
+      this.$emit(ev, value)
+    },
     attr (value) {
       return ~['', null, undefined].indexOf(value) || value instanceof Function ? null : value
     },
     emit (e) {
-      this.$emit(e.type, e.type === 'input' ? e.target.value : e)
+      this.$emit(
+        e.type,
+        e.type === 'input' ? e.target.value : e
+      )
+    },
+    bindInput (e) {
+      this.bindChanges(
+        e.type === 'input' ? e.target.value : e,
+        e.type
+      )
     },
     focus () {
       this.input.focus()
     },
     reset () {
-      this.val = ''
+      this.bindChanges('')
     },
     classWrapper () {
-      if (this.isGroup && !this.inline) {
+      if (this.isGroup && !this.inline)
         return 'input-group'
-      }
 
-      if (this.horizontal) {
+      if (this.horizontal)
         return this.horizontalWrapper
-      }
+
+      if (this.inline)
+        return 'relative inline'
 
       return 'relative'
     },

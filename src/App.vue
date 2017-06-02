@@ -10,6 +10,9 @@
         <hr><hr>
         <bs-form-modal></bs-form-modal>
     </div>
+
+    <hr><hr>
+    <hr><hr>
   </div>
 </template>
 

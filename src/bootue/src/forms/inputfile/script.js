@@ -12,7 +12,10 @@ export default {
     error: {type: String, default: null},
     multiple: {type: Boolean, default: false},
     state: {type: String, default: null},
-    icon: {type: Boolean, default: false}
+    inline: {type: Boolean, default: false},
+    horizontal: {type: Boolean, default: false},
+    horizontalWrapper: {type: String, default: 'col-sm-10'},
+    horizontalLabelWrapper: {type: String, default: 'col-sm-2'}
   },
 
   data () {
@@ -68,6 +71,24 @@ export default {
 
       this.val = files
       this.text = files[0].name
+      this.$emit('selected', files)
+    },
+    classWrapper () {
+      if (this.isGroup && !this.inline)
+        return 'input-group'
+
+      if (this.horizontal)
+        return this.horizontalWrapper
+
+      if (this.inline)
+        return 'relative inline'
+
+      return 'relative'
+    },
+    horizontalLabelClass () {
+      if (this.horizontal) {
+        return this.horizontalLabelWrapper
+      }
     }
   },
 

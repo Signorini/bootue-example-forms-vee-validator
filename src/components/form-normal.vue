@@ -2,7 +2,7 @@
   <div class="row">
     <h3>Basic Form</h3>
 
-    <form class="col-xs-">
+    <form>
       <div class="row">
         <div class="col-xs-6">
           <bs-input
@@ -47,7 +47,7 @@
            ></bs-input-file>
         </div>
         <div class="col-xs-6">
-          <pre v-if="model.file">{{model.file}}</pre>
+          <pre><span v-for="f in model.file">{{f.name}}</span></pre>
           <code>{{errors.first('file')}}</code>
         </div>
       </div>
@@ -56,10 +56,11 @@
      <div class="row">
        <div class="col-xs-6">
          <bs-select
-           labels="Choose your fruit"
+           label="Choose your fruit"
            v-model="model.select"
            :options="fruits"
             multiple
+            justified
             :limit="3"
             placeholder="Choose your fruit"
             clear-button
