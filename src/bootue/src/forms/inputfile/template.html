@@ -2,10 +2,10 @@
 :class="[showState]">
 <div class="infile">
   <slot name="label">
-    <label v-if="label" class="control-label" :class="horizontalLabelClass()">{{label}}</label>
+    <label v-if="label" class="control-label" :class="labelClass()">{{label}}</label>
   </slot>
 
-  <div :class="classWrapper()">
+  <div :class="wrapperClass()">
 
     <div class="btn-group form-control">
 
@@ -26,7 +26,9 @@
 
     </div>
   </div>
+
+  <div v-if="showHelp" class="help-block relative">{{help}}</div>
+  <div v-if="showError" class="help-block with-errors relative">{{error}}</div>
 </div>
-<div v-if="showHelp" class="help-block relative">{{help}}</div>
-<div v-if="showError" class="help-block with-errors relative">{{error}}</div>
+
 </div>

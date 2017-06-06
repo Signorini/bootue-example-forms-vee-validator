@@ -40,7 +40,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   margin: auto;
-  width: 900px;
+  max-width: 900px;
 }
 
 h1, h2 {

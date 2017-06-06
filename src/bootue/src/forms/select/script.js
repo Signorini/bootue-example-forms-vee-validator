@@ -24,19 +24,24 @@ export default {
     search: {type: Boolean, default: false},
     searchText: {type: String, default: 'Search'},
     value: null,
-    inline: {type: Boolean, default: false},
-    horizontal: {type: Boolean, default: false},
-    horizontalWrapper: {type: String, default: 'col-sm-10'},
-    horizontalLabelWrapper: {type: String, default: 'col-sm-2'}
+    formType: {type: String, default: null},
+    horizontalWrapper: {type: String, default: 'col-sm-9'},
+    horizontalLabelWrapper: {type: String, default: 'col-sm-3'}
   },
   data () {
     return {
       list: [],
       loading: null,
       searchValue: null,
+      inState: this.state,
       show: false,
       notify: false,
-      val: null
+      val: null,
+      constants: {
+        SUCCESS: {name: 'success', icon: 'check'},
+        WARNING: {name: 'warning', icon: 'exclamation'},
+        ERROR: {name: 'error', icon: 'times'}
+      }
     }
   },
   computed: {
@@ -94,6 +99,9 @@ export default {
     }
   },
   watch: {
+    error (val) {
+      this.inState=val ? this.constants.ERROR : this.constants.SUCCESS
+    },
     options (options) {
       if (options instanceof Array) {
         this.setOptions(options)
@@ -212,22 +220,24 @@ export default {
 
       document.removeEventListener('click', this.clickOutside, false)
     },
-    classWrapper () {
-      if (this.isGroup && !this.inline)
-        return 'input-group'
+    wrapperClass () {
+      let wClass
 
-      if (this.horizontal)
-        return this.horizontalWrapper
-
-      if (this.inline)
-        return 'relative inline'
-
-      return 'relative'
-    },
-    horizontalLabelClass () {
-      if (this.horizontal) {
-        return this.horizontalLabelWrapper
+      switch (this.formType) {
+        case 'inline':
+          wClass = 'relative inline'
+        break;
+        case 'horizontal':
+          wClass = this.horizontalWrapper
+        break;
+        default:
+          wClass = 'relative'
       }
+
+      return wClass
+    },
+    labelClass () {
+      return this.formType == "horizontal" ? this.horizontalLabelWrapper : null;
     }
   },
   created () {

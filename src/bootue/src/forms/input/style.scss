@@ -28,5 +28,8 @@ label~.close {
   position: relative;
 }
 .inline {
-  display: inline;
+  display: inline-block;
+}
+.form-horizontal .icon .form-control-feedback {
+    right: 15px;
 }

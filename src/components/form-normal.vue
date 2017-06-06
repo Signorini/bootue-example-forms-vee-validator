@@ -1,5 +1,5 @@
 <template>
-  <div class="row">
+  <div>
     <h3>Basic Form</h3>
 
     <form>
@@ -59,9 +59,7 @@
            label="Choose your fruit"
            v-model="model.select"
            :options="fruits"
-            multiple
             justified
-            :limit="3"
             placeholder="Choose your fruit"
             clear-button
             style="width: 100%"
@@ -172,8 +170,8 @@ export default {
         check: {one: false, two: false, three: false, four: false, five: false, group: []},
         radio: {base:null, group:null},
         radio2: {},
-        select: null,
-        select2: null
+        select: [],
+        select2: []
       },
       fruits: ['apple', 'banana', 'watermellon', 'orange', 'mellon', 'pineapple', 'coconut', 'alien mellon', 'green apple']
     }

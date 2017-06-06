@@ -16,19 +16,17 @@ export default {
     rows: {type: Number, default: 3},
     type: {type: String, default: 'text'},
     value: {default: null},
-    inline: {type: Boolean, default: false},
-    horizontal: {type: Boolean, default: false},
-    horizontalWrapper: {type: String, default: 'col-sm-10'},
-    horizontalLabelWrapper: {type: String, default: 'col-sm-2'}
+    formType: {type: String, default: null},
+    horizontalWrapper: {type: String, default: 'col-sm-9'},
+    horizontalLabelWrapper: {type: String, default: 'col-sm-3'}
   },
   data () {
     return {
-      isGroup: false,
       inState: this.state,
       constants: {
-        SUCCESS: 'success',
-        WARNING: 'warning',
-        ERROR: 'error'
+        SUCCESS: {name: 'success', icon: 'check'},
+        WARNING: {name: 'warning', icon: 'exclamation'},
+        ERROR: {name: 'error', icon: 'times'}
       }
     }
   },
@@ -39,25 +37,11 @@ export default {
     title () {return this.error || this.help || ''},
     showState () {return this.inState ? `has-${this.inState}` : ''},
     labelFeedback () {return this.$slots['label'] || this.label},
-    showIcon () {
-      let icc
-      switch (this.inState) {
-        case this.constants.SUCCESS:
-          icc = 'check'
-          break
-        case this.constants.ERROR:
-          icc = 'times'
-          break
-        case this.constants.WARNING:
-          icc = 'exclamation'
-          break
-      }
-      return icc
-    }
+    showIcon () {return this.inState ? this.constants[this.inState.toUpperCase()].icon : null}
   },
   watch: {
     error (val) {
-      this.inState=val ? this.constants.ERROR : this.constants.SUCCESS
+      this.inState = val ? this.constants.ERROR.name : this.constants.SUCCESS.name
     },
     value (val) {
       this.bindChanges(val)
@@ -89,29 +73,32 @@ export default {
     reset () {
       this.bindChanges('')
     },
-    classWrapper () {
-      if (this.isGroup && !this.inline)
-        return 'input-group'
+    wrapperClass () {
+      let wClass
 
-      if (this.horizontal)
-        return this.horizontalWrapper
-
-      if (this.inline)
-        return 'relative inline'
-
-      return 'relative'
-    },
-    horizontalLabelClass () {
-      if (this.horizontal) {
-        return this.horizontalLabelWrapper
+      switch (this.formType) {
+        case 'inline':
+          wClass = 'relative inline'
+        break;
+        case 'horizontal':
+          wClass = this.horizontalWrapper
+        break;
+        case 'group':
+          wClass = 'input-group'
+        break;
+        default:
+          wClass = 'relative'
       }
+
+      return wClass
+    },
+    labelClass () {
+      return this.formType == "horizontal" ? this.horizontalLabelWrapper : null;
     }
   },
-  created () {
-    this._input = true
-  },
   mounted () {
-    this.isGroup = typeof this.$slots.before === 'object' || typeof this.$slots.after === 'object'
+    const group = typeof this.$slots.before === 'object' || typeof this.$slots.after === 'object'
+    this.formType = group ? 'group' : this.formType
   },
   beforeDestroy () {
     if (this._parent) {

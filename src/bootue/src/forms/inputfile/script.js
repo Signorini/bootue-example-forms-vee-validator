@@ -12,51 +12,30 @@ export default {
     error: {type: String, default: null},
     multiple: {type: Boolean, default: false},
     state: {type: String, default: null},
-    inline: {type: Boolean, default: false},
-    horizontal: {type: Boolean, default: false},
-    horizontalWrapper: {type: String, default: 'col-sm-10'},
-    horizontalLabelWrapper: {type: String, default: 'col-sm-2'}
+    formType: {type: String, default: null},
+    horizontalWrapper: {type: String, default: 'col-sm-9'},
+    horizontalLabelWrapper: {type: String, default: 'col-sm-3'}
   },
 
   data () {
     return {
       val: null,
       image: '',
-      text: null
+      text: null,
+      constants: {
+        SUCCESS: {name: 'success', icon: 'check'},
+        WARNING: {name: 'warning', icon: 'exclamation'},
+        ERROR: {name: 'error', icon: 'times'}
+      }
     }
   },
 
   computed: {
-    textButton () {
-      return this.text || this.placeholder
-    },
-    input () {
-      return this.$refs.input
-    },
-    showIcon () {
-      let icc;
-      switch (this.state) {
-        case 'success':
-          icc = 'check'
-          break;
-        case 'error':
-          icc = 'times'
-          break;
-        case 'warning':
-          icc = 'exclamation'
-          break;
-      }
-      return icc;
-    },
-    showError () {
-      return this.error
-    },
-    showHelp () {
-      return this.help && (!this.showError)
-    },
-    showState () {
-      return this.state ? `has-${this.state}` : ''
-    }
+    textButton () {return this.text || this.placeholder},
+    input () {return this.$refs.input},
+    showError () {return this.error},
+    showHelp () {return this.help && (!this.showError)},
+    showState () {return this.inState ? `has-${this.inState}` : ''}
   },
 
   methods: {
@@ -73,22 +52,24 @@ export default {
       this.text = files[0].name
       this.$emit('selected', files)
     },
-    classWrapper () {
-      if (this.isGroup && !this.inline)
-        return 'input-group'
+    wrapperClass () {
+      let wClass
 
-      if (this.horizontal)
-        return this.horizontalWrapper
-
-      if (this.inline)
-        return 'relative inline'
-
-      return 'relative'
-    },
-    horizontalLabelClass () {
-      if (this.horizontal) {
-        return this.horizontalLabelWrapper
+      switch (this.formType) {
+        case 'inline':
+          wClass = 'relative inline'
+        break;
+        case 'horizontal':
+          wClass = this.horizontalWrapper
+        break;
+        default:
+          wClass = 'relative'
       }
+
+      return wClass
+    },
+    labelClass () {
+      return this.formType == "horizontal" ? this.horizontalLabelWrapper : null;
     }
   },
 

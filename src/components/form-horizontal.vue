@@ -1,5 +1,5 @@
 <template>
-  <div class="row">
+  <div>
     <h3>Horizontal Form</h3>
 
     <form class="form-horizontal">
@@ -11,7 +11,7 @@
           v-validate.initial="'required'"
           name="name"
           :error="makeError('name')"
-          horizontal
+          form-type="horizontal"
           ></bs-input>
         </div>
         <div class="col-xs-6">
@@ -29,7 +29,7 @@
           v-validate.initial="'required|email'"
           name="email"
           :error="makeError('email')"
-          horizontal
+          form-type="horizontal"
           ></bs-input>
         </div>
         <div class="col-xs-6">
@@ -46,7 +46,7 @@
           v-validate.initial="'required'"
           name="file"
           :error="makeError('file')"
-          horizontal
+          formType="horizontal"
           ></bs-input-file>
         </div>
         <div class="col-xs-6">
@@ -59,18 +59,15 @@
       <div class="row">
         <div class="col-xs-6">
           <bs-select
-          label="Choose your fruit"
+          label="Fruit"
           v-model="model.select"
           :options="fruits"
-          multiple
-          :limit="3"
           placeholder="Choose your fruit"
           clear-button
-          style="width: 100%"
           v-validate.initial="'required'"
           name="fruits"
           :error="makeError('fruits')"
-          horizontal
+          formType="horizontal"
           ></bs-select>
         </div>
         <div class="col-xs-6">

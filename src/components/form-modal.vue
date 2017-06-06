@@ -1,5 +1,5 @@
 <template>
-  <div class="row">
+  <div>
     <h3>Form inside modals</h3>
 
     <button class="btn btn-primary" @click="show1 = true">Show Normal</button>

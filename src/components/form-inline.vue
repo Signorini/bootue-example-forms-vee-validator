@@ -1,5 +1,5 @@
 <template>
-  <div class="row">
+  <div>
     <h3>Inline form</h3>
 
     <form class="form-inline">
@@ -11,7 +11,7 @@
           v-validate.initial="'required'"
           name="name"
           :error="makeError('name')"
-          inline
+          formType="inline"
           ></bs-input>
 
           <bs-input
@@ -21,7 +21,7 @@
           v-validate.initial="'required|email'"
           name="email"
           :error="makeError('email')"
-          inline
+          formType="inline"
           ></bs-input>
 
           <bs-input-file
@@ -30,21 +30,18 @@
           v-validate.initial="'required'"
           name="file"
           :error="makeError('file')"
-          inline
+          formType="inline"
           ></bs-input-file>
 
           <bs-select
           label="Choose your fruit"
           v-model="model.select"
           :options="fruits"
-          multiple
-          :limit="2"
           placeholder="Choose your fruit"
-          clear-button
           v-validate.initial="'required'"
           name="fruits"
           :error="makeError('fruits')"
-          inline
+          formType="inline"
           ></bs-select>
         </div>
 
