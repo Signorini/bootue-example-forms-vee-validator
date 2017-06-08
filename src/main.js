@@ -3,7 +3,8 @@ import App from './App.vue'
 
 import mixins_forms from './mixins/forms'
 
-import Bootue from './bootue';
+//import Bootue from './bootue/index';
+import Bootue from 'bootue';
 import VeeValidate from 'vee-validate'
 
 Vue.use(Bootue);
